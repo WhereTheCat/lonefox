@@ -1,4 +1,4 @@
-extends Node
+extends NetFoxContextDependant
 class_name _NetworkTimeSynchronizer
 
 ## Continuously synchronizes time to the host's remote clock.
@@ -97,10 +97,10 @@ var remote_offset: float:
 		push_error("Trying to set read-only variable remote_offset")
 		
 # Settings
-var _sync_interval: float = ProjectSettings.get_setting(&"netfox/time/sync_interval", 0.25)
-var _sync_samples: int = ProjectSettings.get_setting(&"netfox/time/sync_samples", 8)
-var _adjust_steps: int =ProjectSettings.get_setting(&"netfox/time/sync_adjust_steps", 8)
-var _panic_threshold: float = ProjectSettings.get_setting(&"netfox/time/recalibrate_threshold", 2.)
+var _sync_interval: float = settings.get_setting.get_setting(&"netfox/time/sync_interval", 0.25)
+var _sync_samples: int = settings.get_setting.get_setting(&"netfox/time/sync_samples", 8)
+var _adjust_steps: int =settings.get_setting.get_setting(&"netfox/time/sync_adjust_steps", 8)
+var _panic_threshold: float = settings.get_setting.get_setting(&"netfox/time/recalibrate_threshold", 2.)
 
 var _active: bool = false
 static var _logger: NetfoxLogger = NetfoxLogger._for_netfox("NetworkTimeSynchronizer")

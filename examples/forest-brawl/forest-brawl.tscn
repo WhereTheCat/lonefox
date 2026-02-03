@@ -52,8 +52,8 @@ approach_time = 0.25
 
 [node name="TickInterpolator" type="Node" parent="Camera3D" unique_id=37111897 node_paths=PackedStringArray("root")]
 script = ExtResource("10_ld676")
-root = NodePath("..")
 properties = Array[String]([":global_position"])
+root = NodePath("..")
 
 [node name="Brawler Crown" parent="." unique_id=1684914868 instance=ExtResource("11_eeeag")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

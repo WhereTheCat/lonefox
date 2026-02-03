@@ -39,3 +39,7 @@ var NetworkEvents: _NetworkEvents :
 var NetworkPerformance: _NetworkPerformance :
 	get():
 		return network_performance
+
+var settings: NetfoxContextSettings :
+	get():
+		return netfox_context.settings

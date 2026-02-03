@@ -19,6 +19,7 @@ var _network_time_synchroniser: _NetworkTimeSynchronizer
 var _network_rollback: _NetworkRollback
 var _network_events: _NetworkEvents
 var _network_performance: _NetworkPerformance
+var settings: NetfoxContextSettings
 
 var network_time: _NetworkTime:
 	get(): return _network_time
@@ -67,5 +68,5 @@ static func get_context(node: Node) -> NetFoxContext:
 		push_warning("Not associated with any NetFoxContext.")
 		return null
 	var instance = node.get_meta(INSTANCE_METADATA)
-	assert(instance is NetFoxInstance, "bug")
+	assert(instance is NetFoxContext, "bug")
 	return instance

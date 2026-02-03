@@ -1,4 +1,4 @@
-extends Node
+extends NetFoxContextDependant
 class_name PeerVisibilityFilter
 
 ## Tracks visibility for multiplayer peers

@@ -34,13 +34,15 @@ var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 var respawn_tick: int = -1
 var respawn_count: int = 0
 
+@onready var context: NetFoxContext = NetFoxContext.get_context(self)
+
 func register_hit(from: BrawlerController):
 	if from == self:
 		push_error("Player %s (#%s) trying to register hit on themselves!" % [player_name, player_id])
 		return
 
 	last_hit_player = from
-	last_hit_tick = NetworkRollback.tick if NetworkRollback.is_rollback() else NetworkTime.tick
+	last_hit_tick = context.NetworkRollback.tick if context.NetworkRollback.is_rollback() else context.NetworkTime.tick
 
 func shove(motion: Vector3):
 	move_and_collide(motion / mass)
@@ -52,7 +54,7 @@ func _ready():
 	_snap_to_spawn()
 
 	GameEvents.on_brawler_spawn.emit(self)
-	NetworkTime.on_tick.connect(_tick)
+	context.NetworkTime.on_tick.connect(_tick)
 
 	if not player_name:
 		player_name = "Nameless Brawler #%s" % [player_id]
@@ -139,14 +141,14 @@ func _rollback_tick(delta, tick, is_fresh):
 
 	# Apply movement
 	velocity += platform_velocity
-	velocity *= NetworkTime.physics_factor
+	velocity *= context.NetworkTime.physics_factor
 	move_and_slide()
-	velocity /= NetworkTime.physics_factor
+	velocity /= context.NetworkTime.physics_factor
 	velocity -= platform_velocity
 	
 	# Death
 	if position.y < -death_depth and tick > respawn_tick and is_fresh:
-		var respawn_cooldown = respawn_time * NetworkTime.tickrate
+		var respawn_cooldown = respawn_time * context.NetworkTime.tickrate
 		respawn_tick = tick + respawn_cooldown
 		respawn_count += 1
 

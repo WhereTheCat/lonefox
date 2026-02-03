@@ -122,6 +122,13 @@ var SETTINGS: Array[Dictionary] = [
 		"name": "netfox/events/enabled",
 		"value": true,
 		"type": TYPE_BOOL
+	},
+	#TODO: implement this
+	# Extra Settings
+	{
+		"name": "netfox/compatibility/enable_autoloads",
+		"value": false,
+		"type": TYPE_BOOL
 	}
 ]
 
@@ -179,8 +186,9 @@ func _enter_tree():
 	for setting in SETTINGS:
 		add_setting(setting)
 	
-	for autoload in AUTOLOADS:
-		add_autoload_singleton(autoload.name, autoload.path)
+	if ProjectSettings.get_setting(&"netfox/compatibility/use_autoloads", false):
+		for autoload in AUTOLOADS:
+			add_autoload_singleton(autoload.name, autoload.path)
 	
 	for type in TYPES:
 		add_custom_type(type.name, type.base, load(type.script), load(type.icon))
@@ -190,8 +198,10 @@ func _exit_tree() -> void:
 		for setting in SETTINGS:
 			remove_setting(setting)
 	
-	for autoload in AUTOLOADS:
-		remove_autoload_singleton(autoload.name)
+	#TODO: implement the autoloads for compatibility?
+	if ProjectSettings.get_setting(&"netfox/compatibility/use_autoloads", false):
+		for autoload in AUTOLOADS:
+			remove_autoload_singleton(autoload.name)
 	
 	for type in TYPES:
 		remove_custom_type(type.name)

@@ -1,5 +1,6 @@
-extends Node
+extends NetFoxContextDependant
 class_name _NetworkPerformance
+#TODO: Address the fact that this uses Performance.add_custom_monitor
 
 const NETWORK_LOOP_DURATION_MONITOR: StringName = &"netfox/Network loop duration (ms)"
 const ROLLBACK_LOOP_DURATION_MONITOR: StringName = &"netfox/Rollback loop duration (ms)"
