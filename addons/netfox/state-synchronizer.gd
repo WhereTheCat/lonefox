@@ -49,7 +49,7 @@ var _property_cache: PropertyCache
 var _property_config: _PropertyConfig = _PropertyConfig.new()
 var _properties_dirty: bool = false
 
-var _state_history := _PropertyHistoryBuffer.new()
+var _state_history := _PropertyHistoryBuffer.new(netfox_context)
 
 # Collaborators
 var _full_state_encoder: _SnapshotHistoryEncoder
@@ -71,8 +71,8 @@ func process_settings() -> void:
 	_property_cache = PropertyCache.new(root)
 	_property_config.set_properties_from_paths(properties, _property_cache)
 
-	_full_state_encoder = _SnapshotHistoryEncoder.new(_state_history, _property_cache)
-	_diff_state_encoder = _DiffHistoryEncoder.new(_state_history, _property_cache)
+	_full_state_encoder = _SnapshotHistoryEncoder.new(netfox_context, _state_history, _property_cache)
+	_diff_state_encoder = _DiffHistoryEncoder.new(netfox_context, _state_history, _property_cache)
 
 	_diff_state_encoder.add_properties(_property_config.get_properties())
 
