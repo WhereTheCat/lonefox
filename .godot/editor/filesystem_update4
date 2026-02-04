@@ -1,0 +1,3 @@
+res://examples/forest-brawl/forest-brawl.tscn
+res://examples/forest-brawl/scenes/doodads/cloud-puff-material.tres
+res://addons/netfox/state-synchronizer.gd

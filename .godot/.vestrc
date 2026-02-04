@@ -1,0 +1,4 @@
+{
+"run_params": Array[String](["--vest-glob", "res://*.test.gd"]),
+"test_glob": "res://*.test.gd"
+}
