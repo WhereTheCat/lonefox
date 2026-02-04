@@ -1,4 +1,4 @@
-extends Node
+extends NetfoxContextDependant
 class_name _NetworkRollback
 
 ## Orchestrates the rollback loop.
@@ -7,12 +7,12 @@ class_name _NetworkRollback
 ## @tutorial(Modifying objects during rollback): https://foxssake.github.io/netfox/latest/netfox/tutorials/modifying-objects-during-rollback/
 
 ## Whether rollback is enabled.
-var enabled: bool = ProjectSettings.get_setting(&"netfox/rollback/enabled", true)
+var enabled: bool = settings.get_setting(&"netfox/rollback/enabled", true)
 
 ## Whether diff states are enabled.
 ## [br][br]
 ## Diff states send only the state properties that have changed.
-var enable_diff_states: bool = ProjectSettings.get_setting(&"netfox/rollback/enable_diff_states", true)
+var enable_diff_states: bool = settings.get_setting(&"netfox/rollback/enable_diff_states", true)
 
 ## How many ticks to store as history.
 ## [br][br]
@@ -151,10 +151,10 @@ signal on_record_tick(tick: int)
 signal after_loop()
 
 # Settings
-var _history_limit: int = ProjectSettings.get_setting(&"netfox/rollback/history_limit", 64)
-var _display_offset: int = ProjectSettings.get_setting(&"netfox/rollback/display_offset", 0)
-var _input_delay: int = ProjectSettings.get_setting(&"netfox/rollback/input_delay", 0)
-var _input_redundancy: int = ProjectSettings.get_setting(&"netfox/rollback/input_redundancy", 3)
+var _history_limit: int = settings.get_setting(&"netfox/rollback/history_limit", 64)
+var _display_offset: int = settings.get_setting(&"netfox/rollback/display_offset", 0)
+var _input_delay: int = settings.get_setting(&"netfox/rollback/input_delay", 0)
+var _input_redundancy: int = settings.get_setting(&"netfox/rollback/input_redundancy", 3)
 
 # Timing
 var _tick: int = 0
@@ -292,6 +292,7 @@ func has_input_for_tick(root_node: Node, tick: int) -> bool:
 func free_input_submission_data_for(root_node: Node) -> void:
 	_input_submissions.erase(root_node)
 
+#TODO: address the use of _ready in network rollback.
 func _ready():
 	NetfoxLogger.register_tag(_get_rollback_tag)
 	NetworkTime.after_tick_loop.connect(_rollback)

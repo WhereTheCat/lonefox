@@ -1,4 +1,4 @@
-extends Node
+extends NetfoxContextDependant
 class_name NetworkTickrateHandshake
 
 ## Internal class to manage the tickrate handshake.
@@ -25,7 +25,7 @@ const SIGNAL := 3
 
 ## Configures what happens on a tickrate mismatch.[br]
 ## Defaults to [constant WARN], based on project settings.
-var mismatch_action: int = ProjectSettings.get_setting(&"netfox/time/tickrate_mismatch_action", WARN)
+var mismatch_action: int = settings.get_setting(&"netfox/time/tickrate_mismatch_action", WARN)
 
 static var _logger := NetfoxLogger._for_netfox("NetworkTickrateHandshake")
 
@@ -85,7 +85,7 @@ func _handle_tickrate_mismatch(peer: int, tickrate: int) -> void:
 					NetworkTime.tickrate, tickrate
 				])
 				# TODO: Make tickrate mutable at user's digression
-				ProjectSettings.set_setting(&"netfox/time/tickrate", tickrate)
+				settings.set_project_setting(&"netfox/time/tickrate", tickrate)
 		SIGNAL:
 			on_tickrate_mismatch.emit(peer, tickrate)
 

@@ -1,4 +1,5 @@
-extends Node
+extends NetfoxContextDependant
+class_name _NetworkEvents
 ## This class provides convenience signals for multiplayer games.
 ##
 ## While the client start/stop and peer join/leave events are trivial, the 
@@ -72,10 +73,11 @@ func is_server() -> bool:
 	
 	return true
 
+#TODO: address networkevent's use of _ready.
 func _ready() -> void:
 	NetfoxLogger.register_tag(_get_peer_id_tag, -99)
 
-	enabled = ProjectSettings.get_setting(&"netfox/events/enabled", true)
+	enabled = settings.get_setting.get_setting(&"netfox/events/enabled", true)
 
 	# Automatically start ticking when entering multiplayer and stop when 
 	# leaving multiplayer

@@ -1,4 +1,4 @@
-extends Node
+extends NetfoxContextDependant
 class_name _NetworkTime
 
 ## This class handles timing.
@@ -365,13 +365,13 @@ const _STATE_SYNCING := 1
 const _STATE_ACTIVE := 2
 
 # Settings
-var _tickrate: int = ProjectSettings.get_setting(&"netfox/time/tickrate", 30)
-var _sync_to_physics: bool = ProjectSettings.get_setting(&"netfox/time/sync_to_physics", false)
-var _max_ticks_per_frame: int = ProjectSettings.get_setting(&"netfox/time/max_ticks_per_frame", 8)
-var _recalibrate_threshold: float = ProjectSettings.get_setting(&"netfox/time/recalibrate_threshold", 8.0)
-var _stall_threshold: float = ProjectSettings.get_setting(&"netfox/time/stall_threshold", 1.0)
-var _clock_stretch_max: float = ProjectSettings.get_setting(&"netfox/time/max_time_stretch", 1.25)
-var _suppress_offline_peer_warning: bool = ProjectSettings.get_setting(&"netfox/time/suppress_offline_peer_warning", false)
+var _tickrate: int = settings.get_setting(&"netfox/time/tickrate", 30)
+var _sync_to_physics: bool = settings.get_setting(&"netfox/time/sync_to_physics", false)
+var _max_ticks_per_frame: int = settings.get_setting(&"netfox/time/max_ticks_per_frame", 8)
+var _recalibrate_threshold: float = settings.get_setting(&"netfox/time/recalibrate_threshold", 8.0)
+var _stall_threshold: float = settings.get_setting(&"netfox/time/stall_threshold", 1.0)
+var _clock_stretch_max: float = settings.get_setting(&"netfox/time/max_time_stretch", 1.25)
+var _suppress_offline_peer_warning: bool = settings.get_setting(&"netfox/time/suppress_offline_peer_warning", false)
 
 var _state: int = _STATE_INACTIVE
 

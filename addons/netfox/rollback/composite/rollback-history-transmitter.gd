@@ -1,4 +1,4 @@
-extends Node
+extends NetfoxContextDependant
 class_name _RollbackHistoryTransmitter
 
 var root: Node
@@ -68,9 +68,9 @@ func configure(
 	_property_cache = p_property_cache
 	_skipset = p_skipset
 
-	_input_encoder = _RedundantHistoryEncoder.new(_input_history, _property_cache)
-	_full_state_encoder = _SnapshotHistoryEncoder.new(_state_history, _property_cache)
-	_diff_state_encoder = _DiffHistoryEncoder.new(_state_history, _property_cache)
+	_input_encoder = _RedundantHistoryEncoder.new(netfox_context, _input_history, _property_cache)
+	_full_state_encoder = _SnapshotHistoryEncoder.new(netfox_context, _state_history, _property_cache)
+	_diff_state_encoder = _DiffHistoryEncoder.new(netfox_context, _state_history, _property_cache)
 
 	_is_initialized = true
 

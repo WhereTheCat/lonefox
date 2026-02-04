@@ -1,4 +1,4 @@
-extends RefCounted
+extends NetfoxContextRefCountedDependant
 class_name _HistoryBuffer
 
 # Maps ticks (int) to arbitrary data

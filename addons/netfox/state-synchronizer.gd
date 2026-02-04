@@ -1,5 +1,5 @@
 @tool
-extends Node
+extends NetfoxContextDependant
 class_name StateSynchronizer
 
 ## Synchronizes state from authority.
