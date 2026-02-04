@@ -1,4 +1,4 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name _NetworkRollback
 
 ## Orchestrates the rollback loop.

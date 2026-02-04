@@ -1,4 +1,4 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name _NetworkEvents
 ## This class provides convenience signals for multiplayer games.
 ##

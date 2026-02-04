@@ -1,4 +1,4 @@
-extends RefCounted
+extends NetfoxContextRefCountedDependant
 class_name _RollbackHistoryRecorder
 
 # Provided externally by RBS

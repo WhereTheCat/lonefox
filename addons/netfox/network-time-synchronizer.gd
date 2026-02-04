@@ -1,4 +1,4 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name _NetworkTimeSynchronizer
 
 ## Continuously synchronizes time to the host's remote clock.

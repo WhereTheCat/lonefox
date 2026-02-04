@@ -1,4 +1,4 @@
-extends RefCounted
+extends NetfoxContextRefCountedDependant
 class_name _SnapshotHistoryEncoder
 
 var _history: _PropertyHistoryBuffer
@@ -10,7 +10,8 @@ var _has_received := false
 
 static var _logger := NetfoxLogger._for_netfox("_SnapshotHistoryEncoder")
 
-func _init(p_history: _PropertyHistoryBuffer, p_property_cache: PropertyCache):
+func _init(p_ctx: NetfoxContext, p_history: _PropertyHistoryBuffer, p_property_cache: PropertyCache):
+	super(p_ctx)
 	_history = p_history
 	_property_cache = p_property_cache
 

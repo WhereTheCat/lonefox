@@ -1,4 +1,4 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name NetworkTickrateHandshake
 
 ## Internal class to manage the tickrate handshake.

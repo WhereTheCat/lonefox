@@ -1,4 +1,4 @@
-extends RefCounted
+extends NetfoxContextRefCountedDependant
 class_name _RedundantHistoryEncoder
 
 var redundancy: int = 4:
@@ -111,6 +111,7 @@ func apply(tick: int, snapshots: Array[_PropertySnapshot], sender: int = 0) -> i
 	return earliest_new_tick
 
 
-func _init(p_history: _PropertyHistoryBuffer, p_property_cache: PropertyCache):
+func _init(p_ctx: NetfoxContext , p_history: _PropertyHistoryBuffer, p_property_cache: PropertyCache):
+	super(p_ctx)
 	_history = p_history
 	_property_cache = p_property_cache

@@ -1,18 +1,18 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name _NetworkPerformance
 #TODO: Address the fact that this uses Performance.add_custom_monitor
 
-const NETWORK_LOOP_DURATION_MONITOR: StringName = &"netfox/Network loop duration (ms)"
-const ROLLBACK_LOOP_DURATION_MONITOR: StringName = &"netfox/Rollback loop duration (ms)"
-const NETWORK_TICKS_MONITOR: StringName = &"netfox/Network ticks simulated"
-const ROLLBACK_TICKS_MONITOR: StringName = &"netfox/Rollback ticks simulated"
-const ROLLBACK_TICK_DURATION_MONITOR: StringName = &"netfox/Rollback tick duration (ms)"
-const ROLLBACK_NODES_SIMULATED_MONITOR: StringName = &"netfox/Rollback nodes simulated"
-const ROLLBACK_NODES_SIMULATED_PER_TICK_MONITOR: StringName = &"netfox/Rollback nodes simulated per tick (avg)"
+const NETWORK_LOOP_DURATION_MONITOR: StringName = &"netfox/%s/Network loop duration (ms)"
+const ROLLBACK_LOOP_DURATION_MONITOR: StringName = &"netfox/%s/Rollback loop duration (ms)"
+const NETWORK_TICKS_MONITOR: StringName = &"netfox/%s/Network ticks simulated"
+const ROLLBACK_TICKS_MONITOR: StringName = &"netfox/%s/Rollback ticks simulated"
+const ROLLBACK_TICK_DURATION_MONITOR: StringName = &"netfox/%s/Rollback tick duration (ms)"
+const ROLLBACK_NODES_SIMULATED_MONITOR: StringName = &"netfox/%s/Rollback nodes simulated"
+const ROLLBACK_NODES_SIMULATED_PER_TICK_MONITOR: StringName = &"netfox/%s/Rollback nodes simulated per tick (avg)"
 
-const FULL_STATE_PROPERTIES_COUNT: StringName = &"netfox/Full state properties count"
-const SENT_STATE_PROPERTIES_COUNT: StringName = &"netfox/Sent state properties count"
-const SENT_STATE_PROPERTIES_RATIO: StringName = &"netfox/Sent state properties ratio"
+const FULL_STATE_PROPERTIES_COUNT: StringName = &"netfox/%s/Full state properties count"
+const SENT_STATE_PROPERTIES_COUNT: StringName = &"netfox/%s/Sent state properties count"
+const SENT_STATE_PROPERTIES_RATIO: StringName = &"netfox/%s/Sent state properties ratio"
 
 var _network_loop_start: float = 0
 var _network_loop_duration: float = 0
@@ -116,23 +116,26 @@ func push_sent_state(state: Dictionary) -> void:
 func push_sent_state_broadcast(state: Dictionary) -> void:
 	_sent_state_props_accum += state.size() * (multiplayer.get_peers().size() - 1)
 
+func _format_name(prop: String) -> String:
+	return prop % netfox_context.name
+
 func _ready() -> void:
 	if not is_enabled():
 		_logger.debug("Network performance disabled")
 		return
 
 	_logger.debug("Network performance enabled, registering performance monitors")
-	Performance.add_custom_monitor(NETWORK_LOOP_DURATION_MONITOR, get_network_loop_duration_ms)
-	Performance.add_custom_monitor(ROLLBACK_LOOP_DURATION_MONITOR, get_rollback_loop_duration_ms)
-	Performance.add_custom_monitor(NETWORK_TICKS_MONITOR, get_network_ticks)
-	Performance.add_custom_monitor(ROLLBACK_TICKS_MONITOR, get_rollback_ticks)
-	Performance.add_custom_monitor(ROLLBACK_TICK_DURATION_MONITOR, get_rollback_tick_duration_ms)
-	Performance.add_custom_monitor(ROLLBACK_NODES_SIMULATED_MONITOR, get_rollback_nodes_simulated)
-	Performance.add_custom_monitor(ROLLBACK_NODES_SIMULATED_PER_TICK_MONITOR, get_rollback_nodes_simulated_per_tick)
+	Performance.add_custom_monitor(_format_name(NETWORK_LOOP_DURATION_MONITOR), get_network_loop_duration_ms)
+	Performance.add_custom_monitor(_format_name(ROLLBACK_LOOP_DURATION_MONITOR), get_rollback_loop_duration_ms)
+	Performance.add_custom_monitor(_format_name(NETWORK_TICKS_MONITOR), get_network_ticks)
+	Performance.add_custom_monitor(_format_name(ROLLBACK_TICKS_MONITOR), get_rollback_ticks)
+	Performance.add_custom_monitor(_format_name(ROLLBACK_TICK_DURATION_MONITOR), get_rollback_tick_duration_ms)
+	Performance.add_custom_monitor(_format_name(ROLLBACK_NODES_SIMULATED_MONITOR), get_rollback_nodes_simulated)
+	Performance.add_custom_monitor(_format_name(ROLLBACK_NODES_SIMULATED_PER_TICK_MONITOR), get_rollback_nodes_simulated_per_tick)
 	
-	Performance.add_custom_monitor(FULL_STATE_PROPERTIES_COUNT, get_full_state_props_count)
-	Performance.add_custom_monitor(SENT_STATE_PROPERTIES_COUNT, get_sent_state_props_count)
-	Performance.add_custom_monitor(SENT_STATE_PROPERTIES_RATIO, get_sent_state_props_ratio)
+	Performance.add_custom_monitor(_format_name(FULL_STATE_PROPERTIES_COUNT), get_full_state_props_count)
+	Performance.add_custom_monitor(_format_name(SENT_STATE_PROPERTIES_COUNT), get_sent_state_props_count)
+	Performance.add_custom_monitor(_format_name(SENT_STATE_PROPERTIES_RATIO), get_sent_state_props_ratio)
 	
 	NetworkTime.before_tick_loop.connect(_before_tick_loop)
 	NetworkTime.on_tick.connect(_on_network_tick)

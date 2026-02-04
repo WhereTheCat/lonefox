@@ -1,11 +1,10 @@
-##A cl
-class_name NetfoxContextDependant extends Node
+class_name NetfoxContextRefCountedDependant extends RefCounted
 
-var netfox_context: NetfoxContext : 
-	get():
-		var netfox_context = NetfoxContext.get_context(self)
-		assert(netfox_context != null, "netfox_context could not be obtained.")
-		return netfox_context
+var netfox_context: NetfoxContext 
+
+func _init(ctx: NetfoxContext) -> void:
+	assert(ctx != null)
+	netfox_context = ctx
 
 var network_time: _NetworkTime :
 	get():

@@ -1,4 +1,4 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name RewindableAction
 
 ## Represents actions that may or may not happen, in a way compatible with

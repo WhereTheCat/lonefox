@@ -1,4 +1,4 @@
-extends RefCounted
+extends NetfoxContextRefCountedDependant
 class_name RollbackFreshnessStore
 
 ## This class tracks nodes and whether they have processed any given tick during

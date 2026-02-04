@@ -1,11 +1,10 @@
 ##Represents an instance of the netfox library that can be used at any point in the SceneTree instead of at the root level.
 ##This allows for both server and client to be hosted in the same godot instance.
-class_name NetFoxContext extends Node
+class_name NetfoxContext extends Node
 
 const INSTANCE_METADATA: StringName = &"_NETFOX_CONTEXT"
 #if the instance was obtained via the scene tree
 #const INSTANCE_FROM_TREE_METADATA: StringName = &"_NETFOX_INSTANCE_IS_FROM_TREE"
-
 
 #TODO: replace:
 #NetworkTime
@@ -46,8 +45,9 @@ func _init() -> void:
 func _associate_child(node: Node) -> void:
 	if node.has_meta(INSTANCE_METADATA):
 		#Already associated, we can assume it's associated to a node further up the tree and override it, still warn though.
-		push_warning("Nested NetFoxInstance nodes, the one further down the tree will be prioritised.")
+		push_warning("Nested NetfoxInstance nodes, the one further down the tree will be prioritised.")
 	node.set_meta(INSTANCE_METADATA, self)
+	OneshotSignal.create_connection(node.tree_exiting, _dessociate_child.bind(node))
 
 func _dessociate_child(node: Node) -> void:
 	if node.has_meta(INSTANCE_METADATA):
@@ -58,15 +58,18 @@ func _dessociate_child(node: Node) -> void:
 		instance.remove_meta(INSTANCE_METADATA)
 
 func _enter_tree() -> void:
+	_associate_child(self)
 	var children = [_network_time, _network_time_synchroniser, _network_rollback, _network_events, _network_performance]
 	for child in children:
 		_associate_child(child)
 		add_child(child, true)
+	child_entered_tree.connect(_associate_child)
+	child_exiting_tree.connect(_dessociate_child)
 
-static func get_context(node: Node) -> NetFoxContext:
+static func get_context(node: Node) -> NetfoxContext:
 	if not node.has_meta(INSTANCE_METADATA):
-		push_warning("Not associated with any NetFoxContext.")
+		push_warning("Not associated with any NetfoxContext.")
 		return null
 	var instance = node.get_meta(INSTANCE_METADATA)
-	assert(instance is NetFoxContext, "bug")
+	assert(instance is NetfoxContext, "bug")
 	return instance

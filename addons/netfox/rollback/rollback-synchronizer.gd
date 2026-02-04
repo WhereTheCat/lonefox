@@ -1,5 +1,5 @@
 @tool
-extends Node
+extends NetfoxContextDependant
 class_name RollbackSynchronizer
 
 ## Similar to [MultiplayerSynchronizer], this class is responsible for
@@ -78,10 +78,10 @@ var _skipset: _Set = _Set.new()
 var _properties_dirty: bool = false
 
 var _property_cache := PropertyCache.new(root)
-var _freshness_store := RollbackFreshnessStore.new()
+var _freshness_store := RollbackFreshnessStore.new(netfox_context)
 
-var _states := _PropertyHistoryBuffer.new()
-var _inputs := _PropertyHistoryBuffer.new()
+var _states := _PropertyHistoryBuffer.new(netfox_context)
+var _inputs := _PropertyHistoryBuffer.new(netfox_context)
 var _last_simulated_tick: int
 
 var _has_input: bool
@@ -327,7 +327,7 @@ func _enter_tree() -> void:
 		_history_transmitter.set_multiplayer_authority(get_multiplayer_authority())
 
 	if _history_recorder == null:
-		_history_recorder = _RollbackHistoryRecorder.new()
+		_history_recorder = _RollbackHistoryRecorder.new(netfox_context)
 
 	if not NetworkTime.is_initial_sync_done():
 		# Wait for time sync to complete

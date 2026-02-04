@@ -20,11 +20,6 @@ config/features=PackedStringArray("4.6")
 run/max_fps=240
 config/icon="res://icon.png"
 
-[autoload]
-
-Async="*res://examples/shared/scripts/async.gd"
-GameEvents="*res://examples/forest-brawl/scripts/game-events.gd"
-
 [display]
 
 window/size/viewport_width=540

@@ -1,5 +1,5 @@
 @tool
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name TickInterpolator
 
 ## Interpolates between network ticks for smooth motion.

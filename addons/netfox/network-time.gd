@@ -1,4 +1,4 @@
-extends NetFoxContextDependant
+extends NetfoxContextDependant
 class_name _NetworkTime
 
 ## This class handles timing.
